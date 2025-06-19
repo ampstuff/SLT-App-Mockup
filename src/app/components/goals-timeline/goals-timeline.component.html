@@ -1,0 +1,77 @@
+<div class="bg-white p-4 w-full overflow-x-auto font-jakarta">
+    <div class="relative min-w-[1200px]">
+
+        <!-- Month labels with division lines and thick gridline for current month -->
+        <div
+            class="relative z-10 grid grid-flow-col auto-cols-[minmax(100px,1fr)] border-b border-gray-200 pb-2 text-center text-sm font-bold text-gray-900 bg-white">
+            <div class="w-[100px] flex-shrink-0"></div>
+            <ng-container *ngFor="let month of months; let i = index">
+                <div [ngClass]="{
+            'border-r border-gray-300': i !== months.length - 1 && i !== currentMonthIndex,
+            'border-r-4 border-blue-500 relative z-10': i === currentMonthIndex
+          }">
+                    <p>{{ month.name }}</p>
+                    <div class="grid grid-cols-4 mt-2 text-xs font-medium text-gray-400">
+                        <span *ngFor="let week of month.weeks">{{ week }}</span>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+        <!-- Gridlines for the body, with thick gridline for current date -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="grid grid-flow-col auto-cols-[minmax(100px,1fr)] h-full">
+                <div class="w-[100px] flex-shrink-0"></div>
+                <ng-container *ngFor="let month of months; let i = index">
+                    <div [ngClass]="{
+              'grid grid-cols-4 h-full border-r border-gray-300': i !== months.length - 1 && i !== currentMonthIndex,
+              'grid grid-cols-4 h-full border-r-4 border-blue-500 relative z-10': i === currentMonthIndex
+            }">
+                        <div *ngFor="let week of month.weeks" class="h-full"></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <!-- Current date marker: blue arrow -->
+        <ng-container *ngIf="currentMonthIndex !== undefined">
+            <div class="absolute z-20" [style.left]="'calc(' + (100 + currentMonthIndex * 100) + 'px)'" style="top: 0;">
+                <div class="flex flex-col items-center">
+                    <!-- Blue arrow -->
+                    <div
+                        class="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[16px] border-b-blue-500">
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="relative pt-4 space-y-3">
+            <div *ngFor="let goal of goals; let i = index" class="flex items-center h-20 z-10 pt-2"
+                [ngClass]="{'border-t border-gray-300': i !== 0}">
+                <div [ngClass]="getStatusClasses(goal.status)"
+                    class="flex-shrink-0 w-[100px] h-full flex items-center justify-center text-xs font-bold border-l-4">
+                    {{ goal.status }}
+                </div>
+
+                <div class="absolute h-20 flex items-center p-4 border rounded-r-lg shadow-sm"
+                    [ngStyle]="getGoalStyle(goal)" [ngClass]="getStatusClasses(goal.status)">
+                    <div class="flex-grow">
+                        <p class="font-semibold text-sm">{{ goal.title }}</p>
+                        <p class="text-xs">{{ goal.impact }}</p>
+                    </div>
+                    <div class="flex items-center ml-4">
+                        <span class="text-xs font-medium px-2 py-1 rounded-full mr-4"
+                            [ngClass]="getPriorityClasses(goal.priority)">
+                            {{ goal.priority }}
+                        </span>
+                        <div
+                            class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-xs font-bold text-gray-600 ring-2 ring-white">
+                            {{ goal.owner.charAt(0) }}{{ goal.owner.split(' ')[1].charAt(0) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

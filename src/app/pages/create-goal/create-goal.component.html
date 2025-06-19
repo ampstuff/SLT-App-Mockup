@@ -1,0 +1,183 @@
+<!--
+*
+* create-a-goal.component.html
+*
+* This file contains the HTML code for the 'Create a Goal' page.
+*
+/-->
+
+
+<div class="flex h-screen bg-[#FEF0D4] font-jakarta">
+    <app-nav-bar></app-nav-bar>
+
+    <div class="flex-1 flex flex-col  ml-4">
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto">
+            <header class="flex justify-between items-center py-8 px-4 bg-white shadow">
+                <div>
+                    <h1 class="text-3xl font-bold">Create new Goal</h1>
+                    <div class="flex flex-row">
+                        <a href="/dashboard" class="text-sm text-[#5C85EB] mt-2 hover:underline">Goal Dashboard</a>
+                        <p class="text-sm text-black mt-2"> &nbsp; / Create a Goal</p>
+                    </div>
+                </div>
+                <app-user-display></app-user-display>
+            </header>
+            <div class="bg-white p-4 shadow mt-4">
+                <h2 class="text-2xl font-bold mb-6">Goals</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Region -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="region" class="block text-sm font-bold text-black">Region</label>
+                        <select id="region" name="region"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md  ">
+                            <option>Great Britain</option>
+                            <option>North America</option>
+                            <option>ANZ</option>
+                            <option>India</option>
+                        </select>
+                    </div>
+
+                    <!-- Department -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="department" class="block text-sm font-bold  text-black">Department</label>
+                        <select id="department" name="department"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md ">
+                            <option>Department Name</option>
+                        </select>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="category" class="block text-sm font-bold  text-black">Category</label>
+                        <select id="category" name="category"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md ">
+                            <option>Goal Category Example</option>
+                        </select>
+                    </div>
+
+                    <!-- Currency -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="currency" class="block text-sm font-bold  text-black">Currency</label>
+                        <select id="currency" name="currency"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md ">
+                            <option>GBP - £</option>
+                            <option>USD - $</option>
+                            <option>EUR - €</option>
+                        </select>
+                    </div>
+
+                    <!-- 2030 Strategy Alignment -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="strategy-alignment" class="block text-sm font-bold  text-black">2030 Strategy
+                            Alignment</label>
+                        <select id="strategy-alignment" name="strategy-alignment"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md ">
+                            <option>2030 Strategy Goal Description 1</option>
+                        </select>
+                    </div>
+
+                    <!-- Goal Type -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="goal-type" class="block text-sm font-bold text-black">Goal Type</label>
+                        <select id="goal-type" name="goal-type"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md ">
+                            <option>Global</option>
+                            <option>Regional</option>
+                        </select>
+                    </div>
+
+                    <!-- Linked to Global Goal -->
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3 border-b-[1.5px] border-[#DADADA]">
+                        <label for="global-goal" class="block text-sm font-bold  text-black">Link to Global
+                            Goal</label>
+                        <select id="global-goal" name="global-goal"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option>Global Goal Name Here</option>
+                        </select>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3">
+                        <label for="description" class="block text-sm font-bold text-black">Description</label>
+                        <textarea id="description" name="description" rows="3"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-3"></textarea>
+                    </div>
+
+                    <!-- Leading Indicators -->
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3">
+                        <label for="leading-indicators" class="block text-sm font-bold text-black">Leading
+                            Indicators (KPIs)</label>
+                        <textarea id="leading-indicators" name="leading-indicators" rows="3"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-3"></textarea>
+                    </div>
+
+                    <!-- Volume Impact Heading -->
+                    <h3 class="text-lg font-bold text-black col-span-1 md:col-span-2 lg:col-span-3">Volume Impact</h3>
+
+                    <!-- Impact Volume -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="impact-volume" class="block text-sm font-bold text-black">Impact Volume</label>
+                        <input type="text" id="impact-volume" name="impact-volume"
+                            class="mt-1 block w-full px-3 py-2 text-base sm:text-sm" placeholder="Enter value" />
+                    </div>
+
+                    <!-- Market Share % Impact -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="strategy-alignment" class="block text-sm font-bold  text-black">Market Share %
+                            Impact</label>
+                        <select id="strategy-alignment" name="strategy-alignment"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md ">
+                            <option>2030 Strategy Goal Description 1</option>
+                        </select>
+                    </div>
+
+                    <!-- Financial Impact Heading -->
+                    <h3 class="text-lg font-bold text-black  col-span-1 md:col-span-2 lg:col-span-3">Financial Impact
+                        (CAD)</h3>
+
+                    <!-- Gross Profit Impact -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="gross-profit-impact" class="block text-sm font-bold text-black">Gross Profit
+                            Impact</label>
+                        <input type="text" id="gross-profit-impact" name="gross-profit-impact"
+                            class="mt-1 block w-full px-3 py-2 text-base sm:text-sm" placeholder="Enter value" />
+                    </div>
+
+                    <!-- Free Cash Flow Impact -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="free-cash-flow-impact" class="block text-sm font-bold text-black">Free Cash Flow
+                            Impact</label>
+                        <input type="text" id="free-cash-flow-impact" name="free-cash-flow-impact"
+                            class="mt-1 block w-full px-3 py-2 text-base sm:text-sm" placeholder="Enter value" />
+                    </div>
+
+                    <!-- Operational Efficiency Impact -->
+                    <div class="border-b-[1.5px] border-[#DADADA]">
+                        <label for="operational-efficiency-impact"
+                            class="block text-sm font-bold text-black">Operational Efficiency Impact</label>
+                        <input type="text" id="operational-efficiency-impact" name="operational-efficiency-impact"
+                            class="mt-1 block w-full px-3 py-2 text-base sm:text-sm" placeholder="Enter value" />
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3">
+                        <label for="leading-indicators" class="block text-sm font-bold text-black">Notes</label>
+                        <textarea id="leading-indicators" name="leading-indicators" rows="3"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-3"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-6">
+                    <button type="button"
+                        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-bold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                        class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-bold rounded-md text-black bg-[#FEE000] hover:bg-[#E6C200] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Create Goal
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

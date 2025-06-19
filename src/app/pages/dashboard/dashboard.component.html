@@ -1,0 +1,357 @@
+<!--
+  Main container for the entire dashboard.
+  Uses flexbox to create a side-by-side layout for the navigation bar and the main content.
+-->
+<div class="flex bg-[#FEF0D4] font-jakarta min-h-screen">
+  <!-- Fixed navigation bar -->
+  <app-nav-bar class="fixed top-0 left-0 h-screen w-42 flex-shrink-0 z-30"></app-nav-bar>
+
+  <!-- Main content area with left padding to avoid overlap -->
+  <main class="flex-1 pl-46 overflow-x-hidden">
+    <!--
+      Header section of the main content.
+      Uses flexbox to align items and distribute space between them.
+    -->
+    <header class="flex items-center justify-between mb-4 p-4 bg-white shadow font-jakarta">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800 ">Goals Dashboard</h1>
+        <p class="text-sm text-gray-500 mt-2">Last Update: 22 May, 2025 at 8:40 AM</p>
+        <!-- Button to create a new goal. -->
+        <button (click)="goToCreateGoal()" class="bg-[#FEE000] text-black font-bold px-4 py-2
+        mt-2 rounded-lg shadow hover:bg-[#E6C200] transition-colors">
+          + Create New Goal
+        </button>
+      </div>
+      <div class="flex items-center space-x-4">
+
+        <!-- Placeholder for the user display component. -->
+        <app-user-display></app-user-display>
+      </div>
+    </header>
+
+    <!--
+      Section for key metrics.
+      Uses a grid layout to display four stat cards.
+      The grid has 4 columns on large screens, 2 on medium, and 1 on small screens.
+    -->
+    <!-- ...existing code... -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4 bg-white p-4 shadow">
+      <div class="col-span-1 md:col-span-2 lg:col-span-4 ">
+        <h2 class="text-2xl font-bold text-black">Key Metrics</h2>
+      </div>
+      <!-- Card for 'Goals Completed' -->
+      <div
+        style="border-radius:16px; border:1px solid #FFCD29; background:radial-gradient(50% 50% at 50% 50%, rgba(254,224,0,0.35) 0%, rgba(255,205,41,0.09) 100%);"
+        class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-gray-500 text-sm font-medium">Goals Completed</h2>
+        <div class="flex items-end justify-between mt-2">
+          <p class="text-3xl font-bold">24</p>
+          <span class="text-sm text-green-500 font-semibold">+5%</span>
+        </div>
+      </div>
+      <!-- Card for 'Goals In Progress' -->
+      <div
+        style="border-radius:16px; border:1px solid #FFCD29; background:radial-gradient(50% 50% at 50% 50%, rgba(254,224,0,0.35) 0%, rgba(255,205,41,0.09) 100%);"
+        class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-gray-500 text-sm font-medium">Goals In Progress</h2>
+        <div class="flex items-end justify-between mt-2">
+          <p class="text-3xl font-bold">12</p>
+          <span class="text-sm text-green-500 font-semibold">+10%</span>
+        </div>
+      </div>
+      <!-- Card for 'New Goals' -->
+      <div
+        style="border-radius:16px; border:1px solid #FFCD29; background:radial-gradient(50% 50% at 50% 50%, rgba(254,224,0,0.35) 0%, rgba(255,205,41,0.09) 100%);"
+        class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-gray-500 text-sm font-medium">New Goals</h2>
+        <div class="flex items-end justify-between mt-2">
+          <p class="text-3xl font-bold">8</p>
+          <span class="text-sm text-red-500 font-semibold">-12%</span>
+        </div>
+      </div>
+      <!-- Card for 'Archived Goals' -->
+      <div
+        style="border-radius:16px; border:1px solid #FFCD29; background:radial-gradient(50% 50% at 50% 50%, rgba(254,224,0,0.35) 0%, rgba(255,205,41,0.09) 100%);"
+        class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-gray-500 text-sm font-medium">Archived Goals</h2>
+        <div class="flex items-end justify-between mt-2">
+          <p class="text-3xl font-bold">5</p>
+          <span class="text-sm text-green-500 font-semibold">+12%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main section for displaying goals -->
+    <section class="bg-white pl-4 py-4 shadow">
+      <!-- Header for the goals section with view switcher -->
+      <div class="flex items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Goals</h2>
+        <div class="flex items-center space-x-2 bg-gray-200 rounded-lg p-1 ml-6">
+          <button (click)="toggleKanbanVisibility()" [ngClass]="kanbanHide
+              ? 'px-4 py-1 rounded-md bg-white text-blue-600 font-semibold shadow'
+              : 'px-4 py-1 rounded-md text-gray-600 hover:bg-gray-300'">
+            Kanban
+          </button>
+          <button (click)="toggleTableVisibility()" [ngClass]="tableHide
+              ? 'px-4 py-1 rounded-md bg-white text-blue-600 font-semibold shadow'
+              : 'px-4 py-1 rounded-md text-gray-600 hover:bg-gray-300'">
+            Table
+          </button>
+          <button (click)="toggleTimelineVisibility()" [ngClass]="timelineHide
+              ? 'px-4 py-1 rounded-md bg-white text-blue-600 font-semibold shadow'
+              : 'px-4 py-1 rounded-md text-gray-600 hover:bg-gray-300'">
+            Timeline
+          </button>
+        </div>
+      </div>
+
+      <!--
+        Kanban View Container.
+        This would typically be shown/hidden based on which view button is active.
+      -->
+      <div *ngIf="kanbanHide">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-2">
+            <button
+              class="flex items-center space-x-1 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-lg px-3 py-1 hover:bg-gray-200">
+              <span>Sort By</span>
+              <strong>Progress</strong>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid for Kanban columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- TO DO Column -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-gray-700">TO DO <span class="text-sm text-gray-500 font-normal ml-2">3</span></h3>
+            <div class="space-y-4 mt-4">
+              <!-- Kanban Card Example 1 -->
+              <div class="bg-white p-4 rounded-lg border">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="px-2 py-0.5 text-xs font-semibold text-red-800 bg-red-100 rounded-full">Red</span>
+                </div>
+                <p class="font-semibold text-gray-800 mb-2">ANZ Market Expansion Strategy - Drive operational excellence
+                </p>
+                <p class="text-sm text-gray-500 mb-4">$ Impact: 50M CAD</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-600">Sarah Johnson</span>
+                  <div class="flex items-center -space-x-2">
+                    <img class="w-6 h-6 rounded-full border-2 border-white"
+                      src="https://placehold.co/32x32/a7a7a7/ffffff?text=S" alt="User avatar">
+                    <span
+                      class="w-6 h-6 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-600">+3</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Kanban Card Example 2 -->
+              <div class="bg-white p-4 rounded-lg border">
+                <div class="flex items-center justify-between mb-2">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">Amber</span>
+                </div>
+                <p class="font-semibold text-gray-800 mb-2">Overall UX Process of full product for first version</p>
+                <p class="text-sm text-gray-500 mb-4">$ Impact: 50M CAD</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-600">Sarah Johnson</span>
+                  <div class="flex items-center -space-x-2">
+                    <img class="w-6 h-6 rounded-full border-2 border-white"
+                      src="https://placehold.co/32x32/a7a7a7/ffffff?text=S" alt="User avatar">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- IN PROGRESS Column -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-gray-700">IN PROGRESS <span
+                class="text-sm text-gray-500 font-normal ml-2">5</span></h3>
+            <div class="space-y-4 mt-4">
+              <!-- Kanban Card Example -->
+              <div class="bg-white p-4 rounded-lg border">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="px-2 py-0.5 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Green</span>
+                </div>
+                <p class="font-semibold text-gray-800 mb-2">ANZ Market Expansion Strategy - Drive operational excellence
+                </p>
+                <p class="text-sm text-gray-500 mb-4">$ Impact: 50M CAD</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-600">Sarah Johnson</span>
+                  <div class="flex items-center -space-x-2">
+                    <img class="w-6 h-6 rounded-full border-2 border-white"
+                      src="https://placehold.co/32x32/a7a7a7/ffffff?text=S" alt="User avatar">
+                    <span
+                      class="w-6 h-6 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-600">+13</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- COMPLETED Column -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-gray-700">COMPLETED <span class="text-sm text-gray-500 font-normal ml-2">7</span>
+            </h3>
+            <div class="space-y-4 mt-4">
+              <!-- Kanban Card Example -->
+              <div class="bg-white p-4 rounded-lg border">
+                <div class="flex items-center justify-between mb-2">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">Amber</span>
+                </div>
+                <p class="font-semibold text-gray-800 mb-2">ANZ Market Expansion Strategy - Drive operational excellence
+                </p>
+                <p class="text-sm text-gray-500 mb-4">$ Impact: 50M CAD</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-600">Sarah Johnson</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- IN REVIEW Column -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-gray-700">IN REVIEW <span class="text-sm text-gray-500 font-normal ml-2">3</span>
+            </h3>
+            <div class="space-y-4 mt-4">
+              <!-- Kanban Card Example -->
+              <div class="bg-white p-4 rounded-lg border">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="px-2 py-0.5 text-xs font-semibold text-red-800 bg-red-100 rounded-full">Red</span>
+                </div>
+                <p class="font-semibold text-gray-800 mb-2">ANZ Market Expansion Strategy - Drive operational excellence
+                </p>
+                <p class="text-sm text-gray-500 mb-4">$ Impact: 50M CAD</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-600">Sarah Johnson</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        Table View Container.
+        This would be hidden by default and shown when the 'Table' button is clicked.
+        The 'hidden' class is used here for demonstration purposes.
+      -->
+      <div *ngIf="tableHide">
+        <div class="overflow-x-auto ">
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="p-4">
+                  <div class="flex items-center">
+                    <input id="checkbox-all" type="checkbox" [(ngModel)]="allChecked" (change)="toggleAllCheckboxes()"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="checkbox-all" class="sr-only">checkbox</label>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-3">Goal Title</th>
+                <th scope="col" class="px-6 py-3">2030 Strategy Priority</th>
+                <th scope="col" class="px-6 py-3">Region</th>
+                <th scope="col" class="px-6 py-3">Department</th>
+                <th scope="col" class="px-6 py-3">Category</th>
+                <th scope="col" class="px-6 py-3">Financial Impact</th>
+                <th scope="col" class="px-6 py-3">Status</th>
+                <th scope="col" class="px-6 py-3">Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Table Row Example 1 -->
+              <tr class="bg-white border-b hover:bg-gray-50">
+                <td class="w-4 p-4">
+                  <div class="flex items-center">
+                    <input id="checkbox-table-1" type="checkbox" [(ngModel)]="checkedRows[0]"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                    <label class="sr-only" for="checkbox-table-1" >checkbox</label>
+                  </div>
+                </td>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Market Expansion Strategy
+                </th>
+                <td class="px-6 py-4">Market Leadership</td>
+                <td class="px-6 py-4">Great Britain</td>
+                <td class="px-6 py-4">Digital Technology</td>
+                <td class="px-6 py-4">Market Expansion</td>
+                <td class="px-6 py-4">$ 50M CAD</td>
+                <td class="px-6 py-4">
+                  <span class="px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">Amber</span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center space-x-2 w-full">
+                    <div class="w-48 bg-gray-200 rounded-full h-2.5">
+                      <div class="bg-blue-600 h-2.5 rounded-full" style="width: 70%"></div>
+                    </div>
+                    <div>70%</div>
+                    <button (click)="toggleDropdown($event, 0)"
+                      class="text-gray-600 hover:text-gray-900 focus:outline-none text-1xl font-bold pb-1 pl-3 leading-none">
+                      ...
+                    </button>
+                    <div *ngIf="openDropdown === 0"
+                      class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div class="py-1" role="menu" aria-orientation="vertical">
+                        <a href="#" (click)="viewItem(0); $event.preventDefault()"
+                          class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem">View</a>
+                        <a href="#" (click)="editItem(0); $event.preventDefault()"
+                          class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem">Edit</a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Table Row Example 2 -->
+              <tr class="bg-white border-b hover:bg-gray-50">
+                <td class="w-4 p-4">
+                  <div class="flex items-center">
+                    <input id="checkbox-table-2" type="checkbox" [(ngModel)]="checkedRows[1]"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="checkbox-table-2" class="sr-only">checkbox</label>
+                  </div>
+                </td>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Market Expansion Strategy
+                </th>
+                <td class="px-6 py-4">Market Leadership</td>
+                <td class="px-6 py-4">ANZ</td>
+                <td class="px-6 py-4">Digital Technology</td>
+                <td class="px-6 py-4">Market Expansion</td>
+                <td class="px-6 py-4">$ 50M CAD</td>
+                <td class="px-6 py-4">
+                  <span class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Green</span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center space-x-2 w-full">
+                    <div class="w-48 bg-gray-200 rounded-full h-2.5">
+                      <div class="bg-blue-600 h-2.5 rounded-full" style="width: 70%"></div>
+                    </div>
+                    <div>70%</div>
+                    <button (click)="toggleDropdown($event, 1)"
+                      class="text-gray-600 hover:text-gray-900 focus:outline-none text-1xl font-bold pb-1 pl-3 leading-none">
+                      ...
+                    </button>
+                    <div *ngIf="openDropdown === 1"
+                      class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div class="py-1" role="menu" aria-orientation="vertical">
+                        <a href="#" (click)="viewItem(1); $event.preventDefault()"
+                          class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem">View</a>
+                        <a href="#" (click)="editItem(1); $event.preventDefault()"
+                          class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem">Edit</a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more table rows as needed -->
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div *ngIf="timelineHide">
+        <app-goals-timeline></app-goals-timeline>
+      </div>
+    </section>
+  </main>
+</div>
